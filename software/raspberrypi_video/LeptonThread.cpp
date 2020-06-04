@@ -359,11 +359,11 @@ void LeptonThread::run()
 		{
 			column = max_column + i;
 			row = max_row + i;
-			if (column >= 0 && column < myImageWidth)
+			if (column > 0 && column < myImageWidth)
 			{
 				myImage.setPixel(column, max_row, crosshair);
 			}
-			if (row >= 0 && row < myImageHeight)
+			if (row > 0 && row < myImageHeight)
 			{
 				myImage.setPixel(max_column, row, crosshair);
 			}
