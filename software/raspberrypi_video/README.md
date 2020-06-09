@@ -56,6 +56,12 @@ Then run this to start the program:
 ./raspberrypi_video -tl 3
 ```
 
+## doorman
+
+```
+./raspberrypi_video -mirror -min 20 -max 38
+```
+
 ----
 
 In order for the application to run properly, a Lepton camera must be attached in a specific way to the SPI, power, and ground pins of the Raspi's GPIO interface, as well as the I2C SDA/SCL pins:
