@@ -47,12 +47,12 @@ void printUsage(char *cmd)
 
 int main(int argc, char **argv)
 {
-	int typeColormap = 3; // colormap_ironblack
-	int typeLepton = 3;		// Lepton 3.x
-	int spiSpeed = 20;		// SPI bus speed 20MHz
-	int rangeBase = -1;		//
-	int rangeMin = -1;		//
-	int rangeMax = -1;		//
+	int typeColormap = 3;		// colormap_ironblack
+	int typeLepton = 3;			// Lepton 3.x
+	int spiSpeed = 20;			// SPI bus speed 20MHz
+	float rangeBase = -1.0; //
+	int rangeMin = -1;			//
+	int rangeMax = -1;			//
 	int loglevel = 0;
 	bool mirror = false;
 	bool auto_capture = false;
@@ -106,7 +106,7 @@ int main(int argc, char **argv)
 		}
 		else if ((strcmp(argv[i], "-base") == 0) && (i + 1 != argc))
 		{
-			int val = std::atoi(argv[i + 1]);
+			float val = std::atof(argv[i + 1]);
 			if ((0 <= val) && (val <= 1024))
 			{
 				rangeBase = val;

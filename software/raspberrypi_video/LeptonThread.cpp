@@ -39,7 +39,7 @@ LeptonThread::LeptonThread() : QThread()
 	autoRangeMin = true;
 	autoRangeMax = true;
 
-	rangeBase = 633;
+	rangeBase = 633.0;
 	rangeMin = 29500;
 	rangeMax = 31200;
 
@@ -116,7 +116,7 @@ void LeptonThread::setAutomaticScalingRange()
 	autoRangeMax = true;
 }
 
-void LeptonThread::useRangeBaseValue(uint16_t val)
+void LeptonThread::useRangeBaseValue(float val)
 {
 	rangeBase = val;
 }
