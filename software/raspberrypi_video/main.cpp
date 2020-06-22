@@ -28,15 +28,15 @@ void printUsage(char *cmd)
 				 "                 e.g. sudo nice -n 0 ./%s -tl 3\n"
 				 " -ss x   SPI bus speed [MHz] (10 - 30)\n"
 				 "           20 : 20MHz [default]\n"
+				 " -base x override base value for scaling (0 - 1024)\n"
+				 "           [default] automatic scaling range adjustment\n"
+				 "           e.g. -base 633\n"
 				 " -min x  override minimum value for scaling (0 - 65535)\n"
 				 "           [default] automatic scaling range adjustment\n"
 				 "           e.g. -min 29500\n"
 				 " -max x  override maximum value for scaling (0 - 65535)\n"
 				 "           [default] automatic scaling range adjustment\n"
 				 "           e.g. -max 31200\n"
-				 " -base x override base value for scaling (0 - 1024)\n"
-				 "           [default] automatic scaling range adjustment\n"
-				 "           e.g. -base 633\n"
 				 " -mirror mirror mode\n"
 				 " -auto   auto capture mode\n"
 				 " -d x    log level (0-255)\n"
@@ -118,11 +118,6 @@ int main(int argc, char **argv)
 			int val = std::atoi(argv[i + 1]);
 			if ((0 <= val) && (val <= 65535))
 			{
-				if (val < 3000)
-				{
-					// val = (val * 91.0) + 27700;
-					val = (val + rangeBase) / 0.0217;
-				}
 				rangeMin = val;
 				i++;
 			}
@@ -132,11 +127,6 @@ int main(int argc, char **argv)
 			int val = std::atoi(argv[i + 1]);
 			if ((0 <= val) && (val <= 65535))
 			{
-				if (val < 3000)
-				{
-					// val = (val * 91.0) + 27700;
-					val = (val + rangeBase) / 0.0217;
-				}
 				rangeMax = val;
 				i++;
 			}

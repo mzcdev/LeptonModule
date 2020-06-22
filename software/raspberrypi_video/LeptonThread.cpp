@@ -124,13 +124,27 @@ void LeptonThread::useRangeBaseValue(uint16_t val)
 void LeptonThread::useRangeMinValue(uint16_t val)
 {
 	autoRangeMin = false;
-	rangeMin = val;
+	if (val < 3000)
+	{
+		rangeMin = (val + rangeBase) / 0.0217;
+	}
+	else
+	{
+		rangeMin = val;
+	}
 }
 
 void LeptonThread::useRangeMaxValue(uint16_t val)
 {
 	autoRangeMax = false;
-	rangeMax = val;
+	if (val < 3000)
+	{
+		rangeMax = (val + rangeBase) / 0.0217;
+	}
+	else
+	{
+		rangeMax = val;
+	}
 }
 
 void LeptonThread::run()
