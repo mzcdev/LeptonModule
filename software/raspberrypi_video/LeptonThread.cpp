@@ -455,6 +455,26 @@ void LeptonThread::capture()
 
 	printf("json_path: %s\n", json_path);
 
+	// save image
+	bool isSave = myImage.save(img_path, "jpeg", 100);
+
+	printf("capture: %s\n", isSave ? "true" : "false");
+
+	// upload image to s3
+	char img_dest[60];
+	sprintf(img_dest, "s3://%s/thermal/%ld.jpg", bucket, now);
+
+	char img_cli[100];
+	strcpy(img_cli, "aws s3 cp ");
+	strcat(img_cli, img_path);
+	strcat(img_cli, " ");
+	strcat(img_cli, img_dest);
+	strcat(img_cli, " --acl public-read");
+
+	printf("cmd: %s\n", img_cli);
+
+	system(img_cli);
+
 	// save json
 	FILE *f = fopen(json_path, "w");
 	if (f == NULL)
@@ -479,26 +499,6 @@ void LeptonThread::capture()
 	printf("cmd: %s\n", json_cli);
 
 	system(json_cli);
-
-	// save image
-	bool isSave = myImage.save(img_path, "jpeg", 100);
-
-	printf("capture: %s\n", isSave ? "true" : "false");
-
-	// upload image to s3
-	char img_dest[60];
-	sprintf(img_dest, "s3://%s/thermal/%ld.jpg", bucket, now);
-
-	char img_cli[100];
-	strcpy(img_cli, "aws s3 cp ");
-	strcat(img_cli, img_path);
-	strcat(img_cli, " ");
-	strcat(img_cli, img_dest);
-	strcat(img_cli, " --acl public-read");
-
-	printf("cmd: %s\n", img_cli);
-
-	system(img_cli);
 
 	uploading = false;
 }
