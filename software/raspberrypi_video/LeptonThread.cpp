@@ -465,6 +465,21 @@ void LeptonThread::capture()
 	fprintf(f, "{\"uuid\":\"%s\",\"filename\":\"%ld\",\"temperature\":%.1f,\"uploaded\":false}", uuid, now, maxCelsius);
 	fclose(f);
 
+	// upload json to s3
+	char json_dest[60];
+	sprintf(json_dest, "s3://%s/meta/%ld.json", bucket, now);
+
+	char json_cli[100];
+	strcpy(json_cli, "aws s3 cp ");
+	strcat(json_cli, json_path);
+	strcat(json_cli, " ");
+	strcat(json_cli, json_dest);
+	strcat(json_cli, " --acl public-read");
+
+	printf("cmd: %s\n", json_cli);
+
+	system(json_cli);
+
 	// save image
 	bool isSave = myImage.save(img_path, "jpeg", 100);
 
@@ -484,21 +499,6 @@ void LeptonThread::capture()
 	printf("cmd: %s\n", img_cli);
 
 	system(img_cli);
-
-	// upload json to s3
-	char json_dest[60];
-	sprintf(json_dest, "s3://%s/meta/%ld.json", bucket, now);
-
-	char json_cli[100];
-	strcpy(json_cli, "aws s3 cp ");
-	strcat(json_cli, json_path);
-	strcat(json_cli, " ");
-	strcat(json_cli, json_dest);
-	strcat(json_cli, " --acl public-read");
-
-	printf("cmd: %s\n", json_cli);
-
-	system(json_cli);
 
 	uploading = false;
 }
