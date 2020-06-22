@@ -108,7 +108,8 @@ int main(int argc, char **argv)
 				if (val < 3000)
 				{
 					// val = (val * 91.0) + 27700;
-					val = (val / 0.0217) + 177.77 + 450.0;
+					// val = (val / 0.0217) + 177.77 + 450.0;
+					val = val * 63535.0 / 65.0;
 				}
 				rangeMin = val;
 				i++;
@@ -122,7 +123,8 @@ int main(int argc, char **argv)
 				if (val < 3000)
 				{
 					// val = (val * 91.0) + 27700;
-					val = (val / 0.0217) + 177.77 + 450.0;
+					// val = (val / 0.0217) + 177.77 + 450.0;
+					val = val * 63535.0 / 65.0;
 				}
 				rangeMax = val;
 				i++;
