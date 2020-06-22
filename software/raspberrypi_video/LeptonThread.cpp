@@ -491,8 +491,7 @@ void LeptonThread::performFFC()
 float LeptonThread::convertCelsius(float val)
 {
 	// return (val - 27700) / 91.0;
-	// return (val * 0.0217) - 450.0 - 177.77;
-	return val * 65.0 / 63535.0;
+	return (val * 0.0217) - 450.0 - 177.77;
 }
 
 void LeptonThread::log_message(uint16_t level, std::string msg)
