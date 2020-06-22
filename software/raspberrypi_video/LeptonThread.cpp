@@ -38,6 +38,8 @@ LeptonThread::LeptonThread() : QThread()
 	// min/max value for scaling
 	autoRangeMin = true;
 	autoRangeMax = true;
+
+	rangeBase = 633;
 	rangeMin = 29500;
 	rangeMax = 31200;
 
@@ -103,9 +105,9 @@ void LeptonThread::useLepton(int newTypeLepton)
 	}
 }
 
-void LeptonThread::useSpiSpeedMhz(unsigned int newSpiSpeed)
+void LeptonThread::useSpiSpeedMhz(unsigned int val)
 {
-	spiSpeed = newSpiSpeed * 1000 * 1000;
+	spiSpeed = val * 1000 * 1000;
 }
 
 void LeptonThread::setAutomaticScalingRange()
@@ -114,16 +116,21 @@ void LeptonThread::setAutomaticScalingRange()
 	autoRangeMax = true;
 }
 
-void LeptonThread::useRangeMinValue(uint16_t newMinValue)
+void LeptonThread::useRangeBaseValue(uint16_t val)
 {
-	autoRangeMin = false;
-	rangeMin = newMinValue;
+	rangeBase = val;
 }
 
-void LeptonThread::useRangeMaxValue(uint16_t newMaxValue)
+void LeptonThread::useRangeMinValue(uint16_t val)
+{
+	autoRangeMin = false;
+	rangeMin = val;
+}
+
+void LeptonThread::useRangeMaxValue(uint16_t val)
 {
 	autoRangeMax = false;
-	rangeMax = newMaxValue;
+	rangeMax = val;
 }
 
 void LeptonThread::run()
@@ -492,7 +499,7 @@ float LeptonThread::convertCelsius(float val)
 {
 	// return (val - 27700) / 91.0;
 	// return (val * 0.0217) - 450.0 - 177.77;
-	return (val * 0.0217) - 633.0;
+	return (val * 0.0217) - rangeBase;
 }
 
 void LeptonThread::log_message(uint16_t level, std::string msg)

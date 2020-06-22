@@ -34,6 +34,9 @@ void printUsage(char *cmd)
 				 " -max x  override maximum value for scaling (0 - 65535)\n"
 				 "           [default] automatic scaling range adjustment\n"
 				 "           e.g. -max 31200\n"
+				 " -base x override base value for scaling (0 - 1024)\n"
+				 "           [default] automatic scaling range adjustment\n"
+				 "           e.g. -base 633\n"
 				 " -mirror mirror mode\n"
 				 " -auto   auto capture mode\n"
 				 " -d x    log level (0-255)\n"
@@ -47,6 +50,7 @@ int main(int argc, char **argv)
 	int typeColormap = 3; // colormap_ironblack
 	int typeLepton = 3;		// Lepton 3.x
 	int spiSpeed = 20;		// SPI bus speed 20MHz
+	int rangeBase = -1;		//
 	int rangeMin = -1;		//
 	int rangeMax = -1;		//
 	int loglevel = 0;
@@ -100,6 +104,15 @@ int main(int argc, char **argv)
 				i++;
 			}
 		}
+		else if ((strcmp(argv[i], "-base") == 0) && (i + 1 != argc))
+		{
+			int val = std::atoi(argv[i + 1]);
+			if ((0 <= val) && (val <= 1024))
+			{
+				rangeBase = val;
+				i++;
+			}
+		}
 		else if ((strcmp(argv[i], "-min") == 0) && (i + 1 != argc))
 		{
 			int val = std::atoi(argv[i + 1]);
@@ -108,7 +121,7 @@ int main(int argc, char **argv)
 				if (val < 3000)
 				{
 					// val = (val * 91.0) + 27700;
-					val = (val + 633.0) / 0.0217;
+					val = (val + rangeBase) / 0.0217;
 				}
 				rangeMin = val;
 				i++;
@@ -122,7 +135,7 @@ int main(int argc, char **argv)
 				if (val < 3000)
 				{
 					// val = (val * 91.0) + 27700;
-					val = (val + 633.0) / 0.0217;
+					val = (val + rangeBase) / 0.0217;
 				}
 				rangeMax = val;
 				i++;
@@ -185,6 +198,8 @@ int main(int argc, char **argv)
 	thread->useLepton(typeLepton);
 	thread->useSpiSpeedMhz(spiSpeed);
 	thread->setAutomaticScalingRange();
+	if (0 <= rangeBase)
+		thread->useRangeBaseValue(rangeBase);
 	if (0 <= rangeMin)
 		thread->useRangeMinValue(rangeMin);
 	if (0 <= rangeMax)

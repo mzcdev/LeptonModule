@@ -34,6 +34,7 @@ public:
   void useLepton(int);
   void useSpiSpeedMhz(unsigned int);
   void setAutomaticScalingRange();
+  void useRangeBaseValue(uint16_t);
   void useRangeMinValue(uint16_t);
   void useRangeMaxValue(uint16_t);
   void run();
@@ -59,6 +60,7 @@ private:
   unsigned int spiSpeed;
   bool autoRangeMin;
   bool autoRangeMax;
+  uint16_t rangeBase;
   uint16_t rangeMin;
   uint16_t rangeMax;
   int myImageWidth;
