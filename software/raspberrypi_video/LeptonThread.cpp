@@ -448,6 +448,23 @@ void LeptonThread::capture()
 
 	printf("img_path: %s\n", img_path);
 
+	// json_path
+	char json_path[30];
+	strcpy(json_path, homedir);
+	strcat(json_path, "/.doorman.json");
+
+	printf("json_path: %s\n", json_path);
+
+	// save json
+	FILE *f = fopen(json_path, "w");
+	if (f == NULL)
+	{
+		printf("Error opening file! %s\n", json_path);
+		return;
+	}
+	fprintf(f, "{\"uuid\":\"%s\",\"filename\":\"%ld\",\"temperature\":%.1f,\"uploaded\":false}", uuid, now, maxCelsius);
+	fclose(f);
+
 	// save image
 	bool isSave = myImage.save(img_path, "jpeg", 100);
 
@@ -467,23 +484,6 @@ void LeptonThread::capture()
 	printf("cmd: %s\n", img_cli);
 
 	system(img_cli);
-
-	// json_path
-	char json_path[30];
-	strcpy(json_path, homedir);
-	strcat(json_path, "/.doorman.json");
-
-	printf("json_path: %s\n", json_path);
-
-	// save json
-	FILE *f = fopen(json_path, "w");
-	if (f == NULL)
-	{
-		printf("Error opening file! %s\n", json_path);
-		return;
-	}
-	fprintf(f, "{\"uuid\":\"%s\",\"filename\":\"%ld\",\"temperature\":%.1f,\"uploaded\":false}", uuid, now, maxCelsius);
-	fclose(f);
 
 	// upload json to s3
 	char json_dest[60];
