@@ -170,7 +170,7 @@ int main(int argc, char **argv)
 
 	//create a PerformFFC button
 	QPushButton *button0 = new QPushButton("PerformFFC", myWidget);
-	button0->setGeometry((width + 20) / 2 - 10, height + 20, 100, 30);
+	button0->setGeometry((width + 20) / 2 - 90, height + 20, 100, 30);
 
 	//create a Capture button
 	QPushButton *button1 = new QPushButton("Capture", myWidget);
