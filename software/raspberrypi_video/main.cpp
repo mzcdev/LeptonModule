@@ -168,9 +168,9 @@ int main(int argc, char **argv)
 	myLabel.setGeometry(10, 10, width, height);
 	myLabel.setPixmap(QPixmap::fromImage(myImage));
 
-	//create a PerformFFC button
-	QPushButton *button0 = new QPushButton("PerformFFC", myWidget);
-	button0->setGeometry((width + 20) / 2 - 170, height + 20, 100, 30);
+	// //create a PerformFFC button
+	// QPushButton *button0 = new QPushButton("PerformFFC", myWidget);
+	// button0->setGeometry((width + 20) / 2 - 170, height + 20, 100, 30);
 
 	//create a Capture button
 	QPushButton *button1 = new QPushButton("Capture", myWidget);
@@ -206,7 +206,7 @@ int main(int argc, char **argv)
 	QObject::connect(thread, SIGNAL(updateText(QString)), label, SLOT(setText(QString)));
 
 	//connect capture button to the thread's capture action
-	QObject::connect(button0, SIGNAL(clicked()), thread, SLOT(performFFC()));
+	// QObject::connect(button0, SIGNAL(clicked()), thread, SLOT(performFFC()));
 	QObject::connect(button1, SIGNAL(clicked()), thread, SLOT(capture()));
 	thread->start();
 
